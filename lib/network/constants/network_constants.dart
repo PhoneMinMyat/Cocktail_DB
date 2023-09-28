@@ -1,0 +1,1 @@
+String BASE_URL = "http://www.thecocktaildb.com/api/json/v1/1"; // CALLED  endpoint
