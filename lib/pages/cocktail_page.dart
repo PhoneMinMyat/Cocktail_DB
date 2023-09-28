@@ -1,27 +1,32 @@
+import 'package:cocktail_db/blocs/cocktail_bloc.dart';
 import 'package:cocktail_db/constants/dimens.dart';
 import 'package:cocktail_db/constants/strings.dart';
 import 'package:cocktail_db/widgets/cocktail_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CocktailPage extends StatelessWidget {
   const CocktailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
-          child: SearchView(),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
-          child: RecommendedCocktailsView(),
-        ),
-        CocktailListView()
-      ],
+    return ChangeNotifierProvider(
+      create: (context) => CocktailBloc(),
+      child: Column(
+        children: const [
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
+            child: SearchView(),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
+            child: RecommendedCocktailsView(),
+          ),
+          CocktailListView()
+        ],
+      ),
     );
   }
 }
@@ -55,48 +60,62 @@ class RecommendedCocktailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: RECOMMENDED_COCKTAIL_VIEW_SIZE,
-      height: RECOMMENDED_COCKTAIL_VIEW_SIZE,
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(MARGIN_MEDIUM)),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(MARGIN_MEDIUM),
-        child: Stack(children: [
-          Image.network(
-              "https://www.thecocktaildb.com/images/media/drink/rrtssw1472668972.jpg"),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.black54,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: MARGIN_MEDIUM, vertical: MARGIN_MEDIUM_2x),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Cocktail name',
-                      style: TextStyle(
-                          color: Colors.white, fontSize: TEXT_REGULAR_3x),
+    return Consumer<CocktailBloc>(
+      builder: (context, bloc, child) => GestureDetector(
+        onTap: () {},
+        child: Container(
+          width: RECOMMENDED_COCKTAIL_VIEW_SIZE,
+          height: RECOMMENDED_COCKTAIL_VIEW_SIZE,
+          decoration:
+              BoxDecoration(borderRadius: BorderRadius.circular(MARGIN_MEDIUM)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(MARGIN_MEDIUM),
+            child: (bloc.randomCocktail == null)
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.orangeAccent,
                     ),
-                    const SizedBox(
-                      height: MARGIN_MEDIUM,
-                    ),
-                    Text(
-                      'Cocktail Category',
-                      style: TextStyle(
-                          color: Colors.white, fontSize: TEXT_REGULAR),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        ]),
+                  )
+                : Stack(children: [
+                    Image.network(
+                       bloc.randomCocktail?.strDrinkThumb ?? ''),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.black54,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: MARGIN_MEDIUM,
+                              vertical: MARGIN_MEDIUM_2x),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                bloc.randomCocktail?.strDrink ?? '',
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: TEXT_REGULAR_3x),
+                              ),
+                              const SizedBox(
+                                height: MARGIN_MEDIUM,
+                              ),
+                              Text(
+                                bloc.randomCocktail?.strCategory ?? '',
+                                style:const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: TEXT_REGULAR),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ]),
+          ),
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:cocktail_db/data/models/cocktail_model.dart';
 import 'package:cocktail_db/data/vos/category_vo.dart';
+import 'package:cocktail_db/data/vos/cocktail_vo.dart';
 import 'package:cocktail_db/network/data_agents/cocktail_data_agent.dart';
 import 'package:cocktail_db/network/data_agents/cocktail_data_agent_impl.dart';
 
@@ -20,6 +21,13 @@ class CocktailModelImpl implements CocktailModel {
   Future<List<CategoryVO>?> getCategoryListFromNetwork() {
     return dataAgent.getCategoryList().then((categoryListRes) {
       return categoryListRes?.categoryList;
+    });
+  }
+
+  @override
+  Future<CocktailVO?> getRandomCocktailFromNetwork() {
+    return dataAgent.getRandomCocktail().then((cocktailListRes){
+      return cocktailListRes?.cocktailList?.first;
     });
   }
 }
