@@ -4,6 +4,7 @@ import 'package:cocktail_db/pages/category_page.dart';
 import 'package:cocktail_db/pages/cocktail_page.dart';
 import 'package:cocktail_db/pages/favourite_page.dart';
 import 'package:cocktail_db/pages/ingredients_page.dart';
+import 'package:cocktail_db/pages/playground_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,7 @@ class HomeView extends StatelessWidget {
               children: const [
                 CocktailPage(),
                 FavouritePage(),
+                // PlaygroundPage(),
                 IngredientsPage(),
                 CategoryPage(),
               ],

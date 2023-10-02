@@ -1,6 +1,7 @@
 import 'package:cocktail_db/blocs/cocktail_bloc.dart';
 import 'package:cocktail_db/constants/dimens.dart';
 import 'package:cocktail_db/constants/strings.dart';
+import 'package:cocktail_db/pages/cocktail_detail_page.dart';
 import 'package:cocktail_db/widgets/cocktail_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +63,11 @@ class RecommendedCocktailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CocktailBloc>(
       builder: (context, bloc, child) => GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  CocktailDetailPage(cocktailVO: bloc.randomCocktail)));
+        },
         child: Container(
           width: RECOMMENDED_COCKTAIL_VIEW_SIZE,
           height: RECOMMENDED_COCKTAIL_VIEW_SIZE,
@@ -77,8 +82,7 @@ class RecommendedCocktailsView extends StatelessWidget {
                     ),
                   )
                 : Stack(children: [
-                    Image.network(
-                       bloc.randomCocktail?.strDrinkThumb ?? ''),
+                    Image.network(bloc.randomCocktail?.strDrinkThumb ?? ''),
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: Container(
@@ -104,7 +108,7 @@ class RecommendedCocktailsView extends StatelessWidget {
                               ),
                               Text(
                                 bloc.randomCocktail?.strCategory ?? '',
-                                style:const TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: TEXT_REGULAR),
                               ),

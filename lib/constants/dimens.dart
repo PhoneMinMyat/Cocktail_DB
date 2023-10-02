@@ -20,4 +20,5 @@ const TEXT_BIG = 32.0;
 
 // App Specific
 const double RECOMMENDED_COCKTAIL_VIEW_SIZE = 250;
+const double COCKTAIL_IMAGE_SIZE_IN_DETAIL_PAGE = 150;
 const double COCKTAIL_LIST_ITEM_HEIGHT = 80;
