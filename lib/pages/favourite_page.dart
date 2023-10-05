@@ -1,5 +1,6 @@
 import 'package:cocktail_db/constants/dimens.dart';
 import 'package:cocktail_db/constants/strings.dart';
+import 'package:cocktail_db/data/vos/cocktail_vo.dart';
 import 'package:cocktail_db/widgets/cocktail_list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class FavouritePage extends StatelessWidget {
             itemCount: 10,
             itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.only(bottom: MARGIN_MEDIUM),
-              child: CocktailListItem(),
+              child: CocktailListItem(cocktailVO: CocktailVO(),),
             ),
           ),
         )

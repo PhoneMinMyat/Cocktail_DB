@@ -9,3 +9,5 @@ const String SEARCH = 'Search';
 const String GLASS = 'Glass:';
 const String IS_ALCHOLIC = 'Is Alcholic:';
 const String INSTRUCTIONS = 'Instructions';
+
+const String RESULT = 'Result';

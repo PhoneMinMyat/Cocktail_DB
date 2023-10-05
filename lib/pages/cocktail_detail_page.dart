@@ -1,35 +1,52 @@
+import 'package:cocktail_db/blocs/detail_bloc.dart';
 import 'package:cocktail_db/constants/dimens.dart';
 import 'package:cocktail_db/constants/strings.dart';
 import 'package:cocktail_db/data/vos/cocktail_vo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:provider/provider.dart';
 
 class CocktailDetailPage extends StatelessWidget {
-  final CocktailVO? cocktailVO;
-  const CocktailDetailPage({super.key, this.cocktailVO});
+  final CocktailVO cocktailVO;
+  const CocktailDetailPage({super.key, required this.cocktailVO});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.orangeAccent.shade100,
-      appBar: AppBar(
-        backgroundColor: Colors.orangeAccent,
-      ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
-            child: ImageNameAndCategorySection(cocktailVO: cocktailVO),
+    return ChangeNotifierProvider(
+      create: (context) => DetailBloc(cocktailVO),
+      child: Consumer<DetailBloc>(
+        builder: (context, bloc, child) => Scaffold(
+          backgroundColor: Colors.orangeAccent.shade100,
+          appBar: AppBar(
+            backgroundColor: Colors.orangeAccent,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
-            child: DescriptionSection(cocktailVO: cocktailVO),
-          )
-        ],
+          body: bloc.resultCocktail == null
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.orangeAccent,
+                  ),
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: MARGIN_MEDIUM_2x,
+                          vertical: MARGIN_MEDIUM),
+                      child: ImageNameAndCategorySection(
+                          cocktailVO: bloc.resultCocktail),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: MARGIN_MEDIUM_2x,
+                          vertical: MARGIN_MEDIUM),
+                      child:
+                          DescriptionSection(cocktailVO: bloc.resultCocktail),
+                    )
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -80,8 +97,8 @@ class DescriptionSection extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: MARGIN_SMALL),
               child: InfoTextView(
-                  title: ingredient.keys.toList()[index]!,
-                  text: ingredient.values.toList()[index]!),
+                  title: ingredient.keys.toList()[index] ?? '',
+                  text: ingredient.values.toList()[index] ?? ''),
             );
           },
         ),

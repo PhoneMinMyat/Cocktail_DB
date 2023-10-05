@@ -1,6 +1,7 @@
 import 'package:cocktail_db/blocs/cocktail_bloc.dart';
 import 'package:cocktail_db/constants/dimens.dart';
 import 'package:cocktail_db/constants/strings.dart';
+import 'package:cocktail_db/data/vos/cocktail_vo.dart';
 import 'package:cocktail_db/pages/cocktail_detail_page.dart';
 import 'package:cocktail_db/widgets/cocktail_list_item.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,9 @@ class CocktailListView extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
-            child: CocktailListItem(),
+            child: CocktailListItem(
+              cocktailVO: CocktailVO(),
+            ),
           );
         },
       ),
@@ -65,8 +68,8 @@ class RecommendedCocktailsView extends StatelessWidget {
       builder: (context, bloc, child) => GestureDetector(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  CocktailDetailPage(cocktailVO: bloc.randomCocktail)));
+              builder: (context) => CocktailDetailPage(
+                  cocktailVO: bloc.randomCocktail ?? CocktailVO())));
         },
         child: Container(
           width: RECOMMENDED_COCKTAIL_VIEW_SIZE,

@@ -37,4 +37,23 @@ class CocktailDataAgentImpl implements CocktailDataAgent {
 
     return Future.value(cocktailListRes);
   }
+
+  @override
+  Future<CocktailListResponse?> getCocktailListByCategory(
+      String category) async {
+    var responses = await dio.get('$BASE_URL/filter.php?c=$category');
+    CocktailListResponse? cocktailListRes =
+        CocktailListResponse.fromJson(responses.data as Map<String, dynamic>);
+
+    return Future.value(cocktailListRes);
+  }
+
+  @override
+  Future<CocktailListResponse?> getCocktailById(String id) async {
+    var responses = await dio.get('$BASE_URL/lookup.php?i=11007');
+    CocktailListResponse? cocktailListRes =
+        CocktailListResponse.fromJson(responses.data as Map<String, dynamic>);
+
+    return Future.value(cocktailListRes);
+  }
 }

@@ -4,4 +4,6 @@ import 'package:cocktail_db/data/vos/cocktail_vo.dart';
 abstract class CocktailModel{
   Future<List<CategoryVO>?> getCategoryListFromNetwork();
   Future<CocktailVO?> getRandomCocktailFromNetwork();
+  Future<List<CocktailVO>?> getCocktailListByCategory(String category);
+  Future<CocktailVO?> getCocktailListById(String id);
 }

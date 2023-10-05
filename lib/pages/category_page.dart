@@ -2,6 +2,7 @@ import 'package:cocktail_db/blocs/category_bloc.dart';
 import 'package:cocktail_db/constants/dimens.dart';
 import 'package:cocktail_db/constants/strings.dart';
 import 'package:cocktail_db/data/vos/category_vo.dart';
+import 'package:cocktail_db/pages/result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,17 +53,26 @@ class CategoryPage extends StatelessWidget {
                       itemCount: bloc.categoryList?.length ?? 0,
                       itemBuilder: (context, index) {
                         CategoryVO temp = bloc.categoryList![index];
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: MARGIN_MEDIUM),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: MARGIN_MEDIUM_2x,
-                              vertical: MARGIN_MEDIUM),
-                          height: MARGIN_XXLARGE,
-                          decoration: BoxDecoration(
-                              color: Colors.orangeAccent,
-                              borderRadius:
-                                  BorderRadius.circular(MARGIN_MEDIUM)),
-                          child: Center(child: Text(temp.category ?? '')),
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ResultPage(
+                                    searchKey: temp.category ?? '',
+                                    resultPath: ResultPath.category)));
+                          },
+                          child: Container(
+                            margin:
+                                const EdgeInsets.only(bottom: MARGIN_MEDIUM),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: MARGIN_MEDIUM_2x,
+                                vertical: MARGIN_MEDIUM),
+                            height: MARGIN_XXLARGE,
+                            decoration: BoxDecoration(
+                                color: Colors.orangeAccent,
+                                borderRadius:
+                                    BorderRadius.circular(MARGIN_MEDIUM)),
+                            child: Center(child: Text(temp.category ?? '')),
+                          ),
                         );
                       },
                     ),

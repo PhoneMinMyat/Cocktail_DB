@@ -43,10 +43,7 @@ class HomeView extends StatelessWidget {
               showUnselectedLabels: true,
               items: const [
                 BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.wine_bar,
-                    ),
-                    label: COCKTAILS),
+                    icon: Icon(Icons.wine_bar), label: COCKTAILS),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.favorite), label: FAVOURITE),
                 BottomNavigationBarItem(

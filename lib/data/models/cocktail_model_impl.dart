@@ -26,7 +26,25 @@ class CocktailModelImpl implements CocktailModel {
 
   @override
   Future<CocktailVO?> getRandomCocktailFromNetwork() {
-    return dataAgent.getRandomCocktail().then((cocktailListRes){
+    return dataAgent.getRandomCocktail().then((cocktailListRes) {
+      return cocktailListRes?.cocktailList?.first;
+    });
+  }
+
+  @override
+  Future<List<CocktailVO>?> getCocktailListByCategory(String category) {
+    return dataAgent
+        .getCocktailListByCategory(category)
+        .then((cocktailListRes) {
+      return cocktailListRes?.cocktailList;
+    });
+  }
+
+  @override
+  Future<CocktailVO?> getCocktailListById(String id) {
+    return dataAgent
+        .getCocktailById(id)
+        .then((cocktailListRes) {
       return cocktailListRes?.cocktailList?.first;
     });
   }
