@@ -33,7 +33,12 @@ class ResultBloc extends ChangeNotifier {
     });
   }
 
-  void searchByIngredient(String key) {}
+  void searchByIngredient(String key) async {
+    await _model.getCocktailListByIngredient(key).then((cocktailList) {
+      resultList = cocktailList;
+      safeNotifyListeners();
+    });
+  }
 
   void searchByName(String key) {}
 

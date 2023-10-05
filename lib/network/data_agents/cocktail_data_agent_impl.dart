@@ -2,6 +2,7 @@ import 'package:cocktail_db/network/constants/network_constants.dart';
 import 'package:cocktail_db/network/data_agents/cocktail_data_agent.dart';
 import 'package:cocktail_db/network/responses/category_list_respones.dart';
 import 'package:cocktail_db/network/responses/cocktail_list_response.dart';
+import 'package:cocktail_db/network/responses/ingredient_list_response.dart';
 import 'package:dio/dio.dart';
 
 class CocktailDataAgentImpl implements CocktailDataAgent {
@@ -51,6 +52,24 @@ class CocktailDataAgentImpl implements CocktailDataAgent {
   @override
   Future<CocktailListResponse?> getCocktailById(String id) async {
     var responses = await dio.get('$BASE_URL/lookup.php?i=11007');
+    CocktailListResponse? cocktailListRes =
+        CocktailListResponse.fromJson(responses.data as Map<String, dynamic>);
+
+    return Future.value(cocktailListRes);
+  }
+
+  @override
+  Future<IngredientListResponse?> getIngredientList() async {
+    var responses = await dio.get('$BASE_URL/list.php?i=list');
+    IngredientListResponse? res =
+        IngredientListResponse.fromJson(responses.data as Map<String, dynamic>);
+
+    return Future.value(res);
+  }
+
+  @override
+  Future<CocktailListResponse?> getCocktailListByIngredient(String ingredient) async{
+      var responses = await dio.get('$BASE_URL/filter.php?i=$ingredient');
     CocktailListResponse? cocktailListRes =
         CocktailListResponse.fromJson(responses.data as Map<String, dynamic>);
 

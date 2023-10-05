@@ -24,6 +24,13 @@ class CocktailListItem extends StatelessWidget {
                 children: [
                   Image.network(
                     cocktailVO.strDrinkThumb ?? '',
+                    loadingBuilder: (context, child, loadingProgress) {
+                      return (loadingProgress != null)
+                          ? const Center(child: CircularProgressIndicator())
+                          : child;
+                    },
+                    height: COCKTAIL_LIST_ITEM_HEIGHT,
+                    width: COCKTAIL_LIST_ITEM_HEIGHT,
                   ),
                   const SizedBox(
                     width: MARGIN_MEDIUM,
