@@ -40,19 +40,36 @@ class CocktailListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
-            child: CocktailListItem(
-              cocktailVO: CocktailVO(),
+    return Consumer<CocktailBloc>(
+      builder: (context, bloc, child) => (bloc.savedCocktailList == null)
+          ? const Expanded(
+              child: Center(
+                child: CircularProgressIndicator(color: Colors.orangeAccent),
+              ),
+            )
+          : Expanded(
+              child: ListView.builder(
+                itemCount: bloc.savedCocktailList?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => CocktailDetailPage(
+                                cocktailVO: bloc.savedCocktailList?[index] ??
+                                    CocktailVO())));
+                      },
+                      child: CocktailListItem(
+                        cocktailVO:
+                            bloc.savedCocktailList?[index] ?? CocktailVO(),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
-          );
-        },
-      ),
     );
   }
 }

@@ -3,8 +3,6 @@ import 'package:cocktail_db/constants/dimens.dart';
 import 'package:cocktail_db/constants/strings.dart';
 import 'package:cocktail_db/data/vos/cocktail_vo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
 class CocktailDetailPage extends StatelessWidget {
@@ -27,25 +25,27 @@ class CocktailDetailPage extends StatelessWidget {
                     color: Colors.orangeAccent,
                   ),
                 )
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: MARGIN_MEDIUM_2x,
-                          vertical: MARGIN_MEDIUM),
-                      child: ImageNameAndCategorySection(
-                          cocktailVO: bloc.resultCocktail),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: MARGIN_MEDIUM_2x,
-                          vertical: MARGIN_MEDIUM),
-                      child:
-                          DescriptionSection(cocktailVO: bloc.resultCocktail),
-                    )
-                  ],
-                ),
+              : SingleChildScrollView(
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: MARGIN_MEDIUM_2x,
+                            vertical: MARGIN_MEDIUM),
+                        child: ImageNameAndCategorySection(
+                            cocktailVO: bloc.resultCocktail),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: MARGIN_MEDIUM_2x,
+                            vertical: MARGIN_MEDIUM),
+                        child:
+                            DescriptionSection(cocktailVO: bloc.resultCocktail),
+                      )
+                    ],
+                  ),
+              ),
         ),
       ),
     );
@@ -134,17 +134,21 @@ class InfoTextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-              fontWeight: FontWeight.w600, fontSize: TEXT_REGULAR_2x),
+        Expanded(
+          child: Text(
+            title,
+            style: const TextStyle(
+                fontWeight: FontWeight.w600, fontSize: TEXT_REGULAR_2x),
+          ),
         ),
-        const Spacer(),
-        Text(
-          text,
-          style: const TextStyle(fontSize: TEXT_REGULAR_2x),
+        SizedBox(
+          width: 120,
+          child: Text(
+            text,
+            style: const TextStyle(fontSize: TEXT_REGULAR_2x),
+          ),
         )
       ],
     );

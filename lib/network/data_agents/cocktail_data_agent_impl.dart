@@ -51,7 +51,7 @@ class CocktailDataAgentImpl implements CocktailDataAgent {
 
   @override
   Future<CocktailListResponse?> getCocktailById(String id) async {
-    var responses = await dio.get('$BASE_URL/lookup.php?i=11007');
+    var responses = await dio.get('$BASE_URL/lookup.php?i=$id');
     CocktailListResponse? cocktailListRes =
         CocktailListResponse.fromJson(responses.data as Map<String, dynamic>);
 
