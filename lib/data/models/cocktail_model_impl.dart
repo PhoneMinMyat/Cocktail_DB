@@ -76,4 +76,19 @@ class CocktailModelImpl implements CocktailModel {
   Future<bool> putCocktailToPersistence(CocktailVO cocktailVO) {
     return persistenceService.saveSingleCocktail(cocktailVO);
   }
+
+  @override
+  Future<List<CocktailVO>?> getFavouriteCocktail() async {
+    List<CocktailVO>? cocktailList =
+        await persistenceService.getSavedCokctailList();
+    return Future.value(
+        cocktailList.where((element) => element.isFavourite == true).toList());
+  }
+
+  @override
+  Future<bool> makeCocktailFavourite(
+      {required String id, required bool isFavourite}) {
+    return persistenceService.makeCocktailFavourite(
+        id: id, isFavourite: isFavourite);
+  }
 }

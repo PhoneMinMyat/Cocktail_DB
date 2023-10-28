@@ -3,43 +3,29 @@ import 'package:cocktail_db/data/models/cocktail_model_impl.dart';
 import 'package:cocktail_db/data/vos/cocktail_vo.dart';
 import 'package:flutter/foundation.dart';
 
-class CocktailBloc extends ChangeNotifier {
+class FavouriteBloc extends ChangeNotifier {
+  bool isDisposed = false;
   final CocktailModel _model = CocktailModelImpl();
 
-  bool isDisposed = false;
+  List<CocktailVO>? favouriteCocktailList;
 
-  CocktailVO? randomCocktail;
-  List<CocktailVO>? savedCocktailList;
-
-  CocktailBloc() {
+  FavouriteBloc() {
     getData();
   }
 
   void getData() async {
-    await _model.getRandomCocktailFromNetwork().then((cocktail) {
-      randomCocktail = cocktail;
+    await _model.getFavouriteCocktail().then((value) {
+      favouriteCocktailList = value;
       safeNotifyListeners();
     });
-
-    await getDataFromPersistence();
   }
 
   Future<void> makeCocktailFavourite(
       {required String id, required bool isFavourite}) async {
+    print('CALLED ON TAP FROM BLOC');
     await _model.makeCocktailFavourite(id: id, isFavourite: isFavourite);
-    await getDataFromPersistence();
+    getData();
     safeNotifyListeners();
-  }
-
-  Future<void> getDataFromPersistence() async {
-    await _model.getCocktailListFromPersistence().then((cocktailList) {
-      savedCocktailList = cocktailList;
-      safeNotifyListeners();
-    });
-
-    savedCocktailList?.forEach((element) {
-      print(element.isFavourite);
-    });
   }
 
   void safeNotifyListeners() {

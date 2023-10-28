@@ -16,4 +16,6 @@ abstract class CocktailModel{
   // Persistence
   Future<bool> putCocktailToPersistence(CocktailVO cocktailVO);
   Future<List<CocktailVO>?> getCocktailListFromPersistence();
+  Future<List<CocktailVO>?> getFavouriteCocktail();
+  Future<bool> makeCocktailFavourite({required String id, required bool isFavourite});
 }

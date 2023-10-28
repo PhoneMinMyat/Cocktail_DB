@@ -1,13 +1,16 @@
+import 'package:flutter/material.dart';
+
 import 'package:cocktail_db/constants/dimens.dart';
 import 'package:cocktail_db/data/vos/cocktail_vo.dart';
-import 'package:flutter/material.dart';
 
 class CocktailListItem extends StatelessWidget {
   final CocktailVO cocktailVO;
+  final Function? onTapFavourite;
   const CocktailListItem({
-    super.key,
+    Key? key,
     required this.cocktailVO,
-  });
+    this.onTapFavourite,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,21 @@ class CocktailListItem extends StatelessWidget {
                     ),
                   ),
                   // const Spacer(),
-                  Icon(Icons.favorite_border),
+                  Visibility(
+                    visible: onTapFavourite != null,
+                    child: GestureDetector(
+                        onTap: () {
+                          onTapFavourite?.call();
+                        },
+                        child: Icon(
+                          (cocktailVO.isFavourite ?? false)
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: (cocktailVO.isFavourite ?? false)
+                              ? Colors.red
+                              : Colors.black,
+                        )),
+                  ),
                   const SizedBox(
                     width: MARGIN_MEDIUM_2x,
                   ),

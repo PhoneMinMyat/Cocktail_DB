@@ -3,6 +3,7 @@ import 'package:cocktail_db/constants/dimens.dart';
 import 'package:cocktail_db/constants/strings.dart';
 import 'package:cocktail_db/data/vos/cocktail_vo.dart';
 import 'package:cocktail_db/pages/cocktail_detail_page.dart';
+import 'package:cocktail_db/pages/result_page.dart';
 import 'package:cocktail_db/widgets/cocktail_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +15,8 @@ class CocktailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => CocktailBloc(),
-      child: Column(
-        children: const [
+      child: const Column(
+        children: [
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
@@ -51,6 +52,8 @@ class CocktailListView extends StatelessWidget {
               child: ListView.builder(
                 itemCount: bloc.savedCocktailList?.length ?? 0,
                 itemBuilder: (context, index) {
+                  CocktailVO cocktailVO =
+                      bloc.savedCocktailList?[index] ?? CocktailVO();
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: MARGIN_MEDIUM_2x, vertical: MARGIN_MEDIUM),
@@ -62,8 +65,12 @@ class CocktailListView extends StatelessWidget {
                                     CocktailVO())));
                       },
                       child: CocktailListItem(
-                        cocktailVO:
-                            bloc.savedCocktailList?[index] ?? CocktailVO(),
+                        cocktailVO: cocktailVO,
+                        onTapFavourite: () {
+                          bloc.makeCocktailFavourite(
+                              id: cocktailVO.idDrink ?? '',
+                              isFavourite: !(cocktailVO.isFavourite ?? false));
+                        },
                       ),
                     ),
                   );
@@ -84,9 +91,13 @@ class RecommendedCocktailsView extends StatelessWidget {
     return Consumer<CocktailBloc>(
       builder: (context, bloc, child) => GestureDetector(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => CocktailDetailPage(
-                  cocktailVO: bloc.randomCocktail ?? CocktailVO())));
+          Navigator.of(context)
+              .push(MaterialPageRoute(
+                  builder: (context) => CocktailDetailPage(
+                      cocktailVO: bloc.randomCocktail ?? CocktailVO())))
+              .then((value) {
+            bloc.getDataFromPersistence();
+          });
         },
         child: Container(
           width: RECOMMENDED_COCKTAIL_VIEW_SIZE,
@@ -157,7 +168,11 @@ class SearchView extends StatelessWidget {
           color: Colors.grey.shade200,
           borderRadius: BorderRadius.circular(MARGIN_MEDIUM_2x)),
       child: TextField(
-        onSubmitted: (value) {},
+        onSubmitted: (value) {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  ResultPage(searchKey: value, resultPath: ResultPath.search)));
+        },
         decoration: const InputDecoration(
             hintText: SEARCH,
             hintStyle: TextStyle(color: Colors.black38),

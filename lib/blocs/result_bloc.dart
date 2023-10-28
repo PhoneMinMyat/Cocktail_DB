@@ -40,7 +40,9 @@ class ResultBloc extends ChangeNotifier {
     });
   }
 
-  void searchByName(String key) {}
+  void searchByName(String key) {
+    //TODO make search by name
+  }
 
   void safeNotifyListeners() {
     if (!isDisposed) {

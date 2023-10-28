@@ -37,7 +37,8 @@ class ResultPage extends StatelessWidget {
                     itemCount: bloc.resultList?.length ?? 0,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: MARGIN_MEDIUM),
+                        padding:
+                            const EdgeInsets.symmetric(vertical: MARGIN_MEDIUM),
                         child: GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
@@ -46,7 +47,8 @@ class ResultPage extends StatelessWidget {
                                     )));
                           },
                           child: CocktailListItem(
-                              cocktailVO: bloc.resultList![index]),
+                            cocktailVO: bloc.resultList![index],
+                          ),
                         ),
                       );
                     },

@@ -57,6 +57,7 @@ class CocktailVO {
   String? strImageAttribution;
   String? strCreativeCommonsConfirmed;
   String? dateModified;
+  bool? isFavourite;
   CocktailVO({
     this.idDrink,
     this.strDrink,
@@ -109,12 +110,19 @@ class CocktailVO {
     this.strImageAttribution,
     this.strCreativeCommonsConfirmed,
     this.dateModified,
+    this.isFavourite = false,
   });
 
   factory CocktailVO.fromJson(Map<String, dynamic> json) =>
       _$CocktailVOFromJson(json);
 
   Map<String, dynamic> toJson() => _$CocktailVOToJson(this);
+
+  set setFavourite(bool value) {
+    isFavourite = value;
+  }
+
+  bool get getFavourite => isFavourite ?? false;
 
   Map<String?, String?> getIngredientAndMeasureList() {
     Map<String?, String?> result = {
@@ -141,6 +149,6 @@ class CocktailVO {
 
   @override
   String toString() {
-    return 'CocktailVO(idDrink: $idDrink, strDrink: $strDrink, strDrinkAlternate: $strDrinkAlternate, strTags: $strTags, strVideo: $strVideo, strCategory: $strCategory, strIBA: $strIBA, strAlcoholic: $strAlcoholic, strGlass: $strGlass, strInstructions: $strInstructions, strInstructionsES: $strInstructionsES, strInstructionsDE: $strInstructionsDE, strInstructionsFR: $strInstructionsFR, strInstructionsIT: $strInstructionsIT, strInstructionsZHHANS: $strInstructionsZHHANS, strInstructionsZHHANT: $strInstructionsZHHANT, strDrinkThumb: $strDrinkThumb, strIngredient1: $strIngredient1, strIngredient2: $strIngredient2, strIngredient3: $strIngredient3, strIngredient4: $strIngredient4, strIngredient5: $strIngredient5, strIngredient6: $strIngredient6, strIngredient7: $strIngredient7, strIngredient8: $strIngredient8, strIngredient9: $strIngredient9, strIngredient10: $strIngredient10, strIngredient11: $strIngredient11, strIngredient12: $strIngredient12, strIngredient13: $strIngredient13, strIngredient14: $strIngredient14, strIngredient15: $strIngredient15, strMeasure1: $strMeasure1, strMeasure2: $strMeasure2, strMeasure3: $strMeasure3, strMeasure4: $strMeasure4, strMeasure5: $strMeasure5, strMeasure6: $strMeasure6, strMeasure7: $strMeasure7, strMeasure8: $strMeasure8, strMeasure9: $strMeasure9, strMeasure10: $strMeasure10, strMeasure11: $strMeasure11, strMeasure12: $strMeasure12, strMeasure13: $strMeasure13, strMeasure14: $strMeasure14, strMeasure15: $strMeasure15, strImageSource: $strImageSource, strImageAttribution: $strImageAttribution, strCreativeCommonsConfirmed: $strCreativeCommonsConfirmed, dateModified: $dateModified)';
+    return 'CocktailVO(idDrink: $idDrink, strDrink: $strDrink, strDrinkAlternate: $strDrinkAlternate, strTags: $strTags, strVideo: $strVideo, strCategory: $strCategory, strIBA: $strIBA, strAlcoholic: $strAlcoholic, strGlass: $strGlass, strInstructions: $strInstructions, strInstructionsES: $strInstructionsES, strInstructionsDE: $strInstructionsDE, strInstructionsFR: $strInstructionsFR, strInstructionsIT: $strInstructionsIT, strInstructionsZHHANS: $strInstructionsZHHANS, strInstructionsZHHANT: $strInstructionsZHHANT, strDrinkThumb: $strDrinkThumb, strIngredient1: $strIngredient1, strIngredient2: $strIngredient2, strIngredient3: $strIngredient3, strIngredient4: $strIngredient4, strIngredient5: $strIngredient5, strIngredient6: $strIngredient6, strIngredient7: $strIngredient7, strIngredient8: $strIngredient8, strIngredient9: $strIngredient9, strIngredient10: $strIngredient10, strIngredient11: $strIngredient11, strIngredient12: $strIngredient12, strIngredient13: $strIngredient13, strIngredient14: $strIngredient14, strIngredient15: $strIngredient15, strMeasure1: $strMeasure1, strMeasure2: $strMeasure2, strMeasure3: $strMeasure3, strMeasure4: $strMeasure4, strMeasure5: $strMeasure5, strMeasure6: $strMeasure6, strMeasure7: $strMeasure7, strMeasure8: $strMeasure8, strMeasure9: $strMeasure9, strMeasure10: $strMeasure10, strMeasure11: $strMeasure11, strMeasure12: $strMeasure12, strMeasure13: $strMeasure13, strMeasure14: $strMeasure14, strMeasure15: $strMeasure15, strImageSource: $strImageSource, strImageAttribution: $strImageAttribution, strCreativeCommonsConfirmed: $strCreativeCommonsConfirmed, dateModified: $dateModified, isFavourite: $isFavourite)';
   }
 }
